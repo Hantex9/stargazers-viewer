@@ -7,6 +7,7 @@ module.exports = {
     'react/style-prop-object': 0,
     'react/require-default-props': 0,
     'import/extensions': 0,
+    'react-hooks/exhaustive-deps': 0,
   },
   globals: {
     __DEV__: 'readonly',

@@ -6,17 +6,19 @@ const basePath = 'search';
 
 const GithubServices = {
   findRepositories: (
-    text: string,
-    currentPage: number,
+    text: string | undefined,
+    page?: number,
     totalItems: number = config.defaultTotalItemsPerPage,
-  ) =>
-    Network.get<RepositoryResponse>(`${basePath}/repositories`, {
+  ) => {
+    return Network.get<RepositoryResponse>(`${basePath}/repositories`, {
       params: {
         q: text,
         per_page: totalItems,
-        page: currentPage,
+        page,
+        sort: 'stars',
       },
-    }),
+    });
+  },
 };
 
 export default GithubServices;

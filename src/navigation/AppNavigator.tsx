@@ -1,5 +1,5 @@
 import React from 'react';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
 
 import {
@@ -16,7 +16,7 @@ export type AppNavigatorStackParams = {
   StargazersPage: undefined;
 };
 
-const MainStack = createNativeStackNavigator<AppNavigatorStackParams>();
+const MainStack = createStackNavigator<AppNavigatorStackParams>();
 
 export const AppNavigator = () => (
   <NavigationContainer>

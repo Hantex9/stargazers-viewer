@@ -12,7 +12,7 @@ export default function App() {
   return (
     <NativeBaseProvider>
       <QueryClientProvider client={queryClient}>
-        <StatusBar style="auto" />
+        <StatusBar style="light" />
         <AppNavigator />
       </QueryClientProvider>
     </NativeBaseProvider>
