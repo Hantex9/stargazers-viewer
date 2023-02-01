@@ -4,6 +4,7 @@ import { StackNavigationOptions } from '@react-navigation/stack';
 import { Text } from 'native-base';
 
 import colors from '../constants/colors';
+import { COMMON_NAV_OPTIONS } from '../constants/commonStyle';
 
 const styles = StyleSheet.create({
   container: {
@@ -27,4 +28,5 @@ export const StargazersPage = () => (
 
 export const StargazersPageNavOptions: StackNavigationOptions = {
   title: 'Text Demo',
+  ...COMMON_NAV_OPTIONS,
 };

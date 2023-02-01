@@ -1,13 +1,12 @@
 import React, { useMemo, useRef, useState } from 'react';
 import { StyleSheet } from 'react-native';
-import { FlatList } from 'native-base';
+import { Divider, FlatList } from 'native-base';
 import {
   StackNavigationOptions,
   StackNavigationProp,
 } from '@react-navigation/stack';
 
 import colors from '../constants/colors';
-import { ListSeparator } from '../components/RepositoryList';
 import { AppNavigatorStackParams } from '../navigation/AppNavigator';
 import RepositoryItem from '../components/RepositoryItem';
 
@@ -116,9 +115,9 @@ export const RepositoriesPage = ({ navigation }: Props) => {
         {repositories.loading && (
           <>
             <RepositoryItem key="1" skeleton />
-            <ListSeparator key="el" />
+            <Divider key="el" />
             <RepositoryItem key="2" skeleton />
-            <ListSeparator key="sep" />
+            <Divider key="sep" />
             <RepositoryItem key="3" skeleton />
           </>
         )}
@@ -143,11 +142,11 @@ export const RepositoriesPage = ({ navigation }: Props) => {
           // @ts-ignore
           // Disabling the next line because all the item.targets are valid - that data just
           // isn't getting picked up by TypeScript
-          onPress={() => navigation.push(item.target)}
+          onPress={() => navigation.push('StargazersPage')}
         />
       )}
       ListFooterComponent={ListFooterComponent}
-      ItemSeparatorComponent={ListSeparator}
+      ItemSeparatorComponent={Divider}
       ListEmptyComponent={EmptyListComponent}
       onEndReached={loadMoreData}
       onEndReachedThreshold={0.01}

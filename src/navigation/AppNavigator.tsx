@@ -26,11 +26,11 @@ export const AppNavigator = () => (
         component={RepositoriesPage}
         options={RepositoriesPageNavOptions}
       />
-      {/* <MainStack.Screen
+      <MainStack.Screen
         name="StargazersPage"
         component={StargazersPage}
         options={StargazersPageNavOptions}
-      /> */}
+      />
     </MainStack.Navigator>
   </NavigationContainer>
 );
