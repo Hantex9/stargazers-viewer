@@ -11,6 +11,7 @@ export interface RepositoryInfo {
   description?: string;
   stargazers_url: string;
   stargazers_count: number;
+  updated_at: Date;
 }
 
 export interface RepositoryResponse {

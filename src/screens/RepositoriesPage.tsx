@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useLayoutEffect, useState } from 'react';
 import { StyleSheet, FlatList } from 'react-native';
 import {
-  StackNavigationOptions,
-  StackNavigationProp,
-} from '@react-navigation/stack';
+  NativeStackNavigationOptions,
+  NativeStackNavigationProp,
+} from '@react-navigation/native-stack';
+import { Button } from 'native-base';
 
 import colors from '../constants/colors';
 import { ListSeparator } from '../components/RepositoryList';
@@ -38,27 +39,33 @@ const screens = [
 ];
 
 type Props = {
-  navigation: StackNavigationProp<AppNavigatorStackParams, 'RepositoriesPage'>;
+  navigation: NativeStackNavigationProp<
+    AppNavigatorStackParams,
+    'RepositoriesPage'
+  >;
 };
 
 export const RepositoriesPage = ({ navigation }: Props) => {
   const [text, setText] = useState<string>();
 
-  useEffect(() => {
-    fetchaRoba();
-  }, []);
+  console.log(text);
 
-  const fetchaRoba = async () => {
-    try {
-      const response = await GithubServices.findRepositories('test', 0);
-    } catch (err) {
-      console.log(err);
-    }
-  };
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      // headerBackground: () => <></>,
+      headerSearchBarOptions: {
+        placeholder: 'Search repositories...',
+        autoCapitalize: 'none',
+        hideWhenScrolling: false,
+        onChangeText: evt => setText(evt.nativeEvent.text),
+      },
+    });
+  }, []);
 
   return (
     <FlatList
       style={styles.container}
+      contentInsetAdjustmentBehavior="automatic"
       data={screens}
       keyExtractor={item => item.title}
       renderItem={({ item }) => (
@@ -78,6 +85,6 @@ export const RepositoriesPage = ({ navigation }: Props) => {
   );
 };
 
-export const RepositoriesPageNavOptions: StackNavigationOptions = {
-  title: 'Test',
+export const RepositoriesPageNavOptions: NativeStackNavigationOptions = {
+  title: 'Repositories',
 };

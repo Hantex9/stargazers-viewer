@@ -1,5 +1,5 @@
 import React from 'react';
-import { createStackNavigator } from '@react-navigation/stack';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { NavigationContainer } from '@react-navigation/native';
 
 import {
@@ -16,7 +16,7 @@ export type AppNavigatorStackParams = {
   StargazersPage: undefined;
 };
 
-const MainStack = createStackNavigator<AppNavigatorStackParams>();
+const MainStack = createNativeStackNavigator<AppNavigatorStackParams>();
 
 export const AppNavigator = () => (
   <NavigationContainer>
@@ -26,11 +26,11 @@ export const AppNavigator = () => (
         component={RepositoriesPage}
         options={RepositoriesPageNavOptions}
       />
-      <MainStack.Screen
+      {/* <MainStack.Screen
         name="StargazersPage"
         component={StargazersPage}
         options={StargazersPageNavOptions}
-      />
+      /> */}
     </MainStack.Navigator>
   </NavigationContainer>
 );

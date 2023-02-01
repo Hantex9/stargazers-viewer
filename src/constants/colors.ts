@@ -3,6 +3,6 @@ export default {
   border: '#c6c6c6',
   white: '#fff',
   gray: '#9ca5ab',
-  background: '#eef0f3',
+  background: '#ffffff',
   error: '#b55464',
 };
