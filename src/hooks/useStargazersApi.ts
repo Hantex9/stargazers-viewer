@@ -1,23 +1,17 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
-import axios from 'axios';
-import GithubServices from '../services/GithubServices';
-import { RepositoryResponse } from '../models/RepositoryResponse';
-
-interface RequestRepository {
-  text?: string | undefined;
-  page?: number;
-  totalItems?: number;
-}
+import axios, { AxiosResponse } from 'axios';
+import GithubServices, { RequestStargazer } from '../services/GithubServices';
+import { Stargazer } from '../models/Stargazer';
 
 interface ReturnedRepositoryHook {
-  data?: RepositoryResponse;
+  data?: Stargazer[];
   error?: any;
   loading: boolean;
-  request: (request: RequestRepository) => any;
+  request: (request: RequestStargazer) => any;
 }
 
-function useRepositoryApi(): ReturnedRepositoryHook {
-  const [data, setData] = useState<RepositoryResponse>();
+function useStargazersApi(): ReturnedRepositoryHook {
+  const [data, setData] = useState<Stargazer[]>();
   const [error, setError] = useState<string | null>('');
   const [loading, setLoading] = useState<boolean>(false);
   const mounted = useRef<boolean>(true);
@@ -31,24 +25,24 @@ function useRepositoryApi(): ReturnedRepositoryHook {
   );
 
   const request = useCallback(
-    async ({ text, page, totalItems }: RequestRepository) => {
+    async ({ userRepo, repoName, page, totalItems }: RequestStargazer): Promise<AxiosResponse<Stargazer[], any> | null> => {
       if (!mounted.current) {
-        return;
+        return null;
       }
       setLoading(true);
       setError(null);
       try {
-        const result = await GithubServices.findRepositories(
-          text,
+        const result = await GithubServices.getRepoStargazers({
+          userRepo,
+          repoName,
           page,
           totalItems,
-        );
+        });
         if (mounted.current) {
-          setData({
-            ...result.data,
-            items: [...(data?.items || []), ...result.data.items],
-          });
+          setData([...(data || []), ...result.data]);
+          setLoading(false);
         }
+        return result;
       } catch (err) {
         if (mounted.current && err instanceof Error) {
           setError(err?.message || 'Unexpected Error!');
@@ -72,4 +66,4 @@ function useRepositoryApi(): ReturnedRepositoryHook {
   };
 }
 
-export default useRepositoryApi;
+export default useStargazersApi;

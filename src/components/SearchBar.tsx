@@ -17,14 +17,7 @@ export const SearchBar = ({ ...rest }: IInputProps) => {
       autoCapitalize="none"
       autoCorrect={false}
       InputLeftElement={
-        <Icon
-          m="2"
-          ml="2"
-          size="6"
-          name="search"
-          color="gray.400"
-          as={<MaterialIcons name="search" />}
-        />
+        <Icon m="2" ml="2" size="6" name="search" color="gray.400" as={<MaterialIcons name="search" />} />
       }
       {...rest}
     />

@@ -1,4 +1,6 @@
+import { OwnerInfo } from "./RepositoryResponse";
+
 export interface Stargazer {
-  login: string;
-  avatarl_url?: string;
+  starred_at: Date;
+  user: OwnerInfo;
 }

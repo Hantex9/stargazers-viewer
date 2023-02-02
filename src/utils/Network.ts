@@ -1,4 +1,5 @@
 import axios from 'axios';
+import config from '../constants/config';
 import Config from '../constants/config';
 
 /**
@@ -10,6 +11,9 @@ axios.defaults.timeout = Config.defaultTimeoutRequests;
 // Headers
 axios.defaults.headers.common['Content-Type'] = 'application/json';
 axios.defaults.headers.common.Accept = 'application/json';
+if (config.githubApiToken) {
+  axios.defaults.headers.common.Authorization = 'Bearer ' + config.githubApiToken;
+}
 
 /**
  * Response Interceptor

@@ -1,5 +1,6 @@
 import AnimatedLottieView from 'lottie-react-native';
 import { Stack, Text } from 'native-base';
+import { InterfaceStackProps } from 'native-base/lib/typescript/components/primitives/Stack/Stack';
 import React from 'react';
 import { Animated } from 'react-native';
 
@@ -9,12 +10,7 @@ type EmptyContentProps = {
   height?: number;
 };
 
-const EmptyContent = ({
-  text,
-  source,
-  height = 220,
-  ...rest
-}: EmptyContentProps) => (
+const EmptyContent = ({ text, source, height = 220, ...rest }: EmptyContentProps & InterfaceStackProps) => (
   <Stack flex={1} {...rest}>
     <Animated.View
       style={{

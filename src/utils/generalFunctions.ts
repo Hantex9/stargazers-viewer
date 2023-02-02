@@ -10,3 +10,12 @@ export function normalizeStarCounter(num: number) {
   }
   return num;
 }
+
+
+// Funzione che stabilisce quando deve re renderizzare il componente
+export const equalProps = (prev: any, next: any) => {
+  if (JSON.stringify(prev) !== JSON.stringify(next)) {
+    return false;
+  }
+  return true;
+};

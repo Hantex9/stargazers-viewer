@@ -1,7 +1,7 @@
 import AnimatedLottieView from 'lottie-react-native';
 import { Stack, Text } from 'native-base';
 import React from 'react';
-import ReAnimated, { FadeIn, FadeInRight } from 'react-native-reanimated';
+import ReAnimated, { FadeInLeft, FadeInRight } from 'react-native-reanimated';
 import { Animated } from 'react-native';
 
 type WelcomeContentProps = {
@@ -10,12 +10,7 @@ type WelcomeContentProps = {
   title?: string;
 };
 
-const WelcomeContent = ({
-  text,
-  height = 220,
-  title,
-  ...rest
-}: WelcomeContentProps) => (
+const WelcomeContent = ({ text, height = 220, title, ...rest }: WelcomeContentProps) => (
   <Stack flex={1} px={2} {...rest}>
     <Animated.View
       style={{
@@ -35,18 +30,12 @@ const WelcomeContent = ({
     </Animated.View>
     {title && (
       <ReAnimated.View entering={FadeInRight.duration(1000)}>
-        <Text
-          fontWeight="bold"
-          mt={5}
-          fontSize={24}
-          color="muted.600"
-          textAlign="center"
-        >
+        <Text fontWeight="bold" mt={5} fontSize={24} color="muted.600" textAlign="center">
           {title}
         </Text>
       </ReAnimated.View>
     )}
-    <ReAnimated.View entering={FadeInRight.duration(1000).delay(900)}>
+    <ReAnimated.View entering={FadeInLeft.duration(1000).delay(900)}>
       <Text fontSize={24} color="muted.600" textAlign="center">
         {text}
       </Text>
