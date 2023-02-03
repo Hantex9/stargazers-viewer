@@ -8,7 +8,7 @@ module.exports = {
     'react/require-default-props': 0,
     'import/extensions': 0,
     'react-hooks/exhaustive-deps': 0,
-    printWidth: 100,
+    'react/no-array-index-key': 0,
   },
   globals: {
     __DEV__: 'readonly',

@@ -44,14 +44,18 @@ function useRepositoryApi(): ReturnedRepositoryHook {
           totalItems,
         );
         if (mounted.current) {
-          setData({
-            ...result.data,
-            items: [...(data?.items || []), ...result.data.items],
-          });
+          if (page && page > 1) {
+            setData({
+              ...result.data,
+              items: [...(data?.items || []), ...result.data.items],
+            });
+          } else {
+            setData(result.data);
+          }
         }
       } catch (err) {
-        if (mounted.current && err instanceof Error) {
-          setError(err?.message || 'Unexpected Error!');
+        if (mounted.current && err) {
+          setError((err as any).message || 'Unexpected Error!');
         }
         console.log(err);
         throw err;
@@ -61,7 +65,7 @@ function useRepositoryApi(): ReturnedRepositoryHook {
         }
       }
     },
-    [data],
+    [data, loading, error],
   );
 
   return {

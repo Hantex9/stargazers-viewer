@@ -19,8 +19,11 @@ const RepositoryItem = ({ repository, skeleton, onPress = () => null }: Reposito
     <TouchableContent onPress={onPress}>
       <HStack px="15px" py="12px">
         <VStack pr="6px" pt="5px">
-          {skeleton && <Skeleton size="18px" endColor="gray.300" rounded="full" />}
-          {!skeleton && <Icon as={<AntDesign name="book" size={18} color={colors.primary} />} />}
+          {skeleton ? (
+            <Skeleton size="18px" endColor="gray.300" rounded="full" />
+          ) : (
+            <Icon as={<AntDesign name="book" size={18} color={colors.primary} />} />
+          )}
         </VStack>
         <VStack flex={1}>
           {!skeleton && repository && (
@@ -50,7 +53,9 @@ const RepositoryItem = ({ repository, skeleton, onPress = () => null }: Reposito
               )}
             </HStack>
             {!skeleton && repository && (
-              <Text color="muted.500">Updated on {moment(repository.updated_at).format('MMM D, YYYY')}</Text>
+              <Text color="muted.500">
+                Updated on {moment(repository.updated_at).format('MMM D, YYYY')}
+              </Text>
             )}
             {skeleton && <Skeleton h="3" rounded="full" endColor="gray.300" width="50%" />}
           </HStack>

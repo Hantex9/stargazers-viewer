@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, fireEvent } from '@testing-library/react-native';
 
-import { List } from '../RepositoriesPage';
+import { List } from '../RepositoriesPage/RepositoriesPage';
 
 it('renders tappable items', () => {
   const push = jest.fn();

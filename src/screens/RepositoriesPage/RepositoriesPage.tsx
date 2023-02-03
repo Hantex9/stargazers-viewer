@@ -3,17 +3,18 @@ import { ListRenderItem, StyleSheet } from 'react-native';
 import { Divider, FlatList } from 'native-base';
 import { StackNavigationOptions, StackNavigationProp } from '@react-navigation/stack';
 
-import colors from '../constants/colors';
-import { AppNavigatorStackParams } from '../navigation/AppNavigator';
-import RepositoryItem from '../components/RepositoryItem';
+import colors from '../../constants/colors';
+import { AppNavigatorStackParams } from '../../navigation/AppNavigator';
+import RepositoryItem from '../../components/RepositoryItem';
 
-import { COMMON_NAV_OPTIONS } from '../constants/commonStyle';
-import { SearchBar } from '../components/SearchBar';
-import useRepositoryApi from '../hooks/useRepositoryApi';
-import config from '../constants/config';
-import EmptyContent from '../components/EmptyContent';
-import WelcomeContent from '../components/WelcomeContent';
-import { RepositoryInfo } from '../models/RepositoryResponse';
+import { COMMON_NAV_OPTIONS } from '../../constants/commonStyle';
+import { SearchBar } from '../../components/SearchBar';
+import useRepositoryApi from '../../hooks/useRepositoryApi';
+import config from '../../constants/config';
+import EmptyContent from '../../components/EmptyContent';
+import WelcomeContent from '../../components/WelcomeContent';
+import { RepositoryInfo } from '../../models/RepositoryResponse';
+import { TotalCounterView } from '../../components/TotalCounterView';
 
 const styles = StyleSheet.create({
   container: {
@@ -22,11 +23,10 @@ const styles = StyleSheet.create({
     paddingTop: 20,
   },
   headerList: {
-    paddingHorizontal: 5,
+    paddingHorizontal: 15,
     paddingBottom: 20,
   },
   contentContainer: {
-    paddingHorizontal: 5,
     paddingBottom: 80,
   },
 });
@@ -43,7 +43,7 @@ export const RepositoriesPage = ({ navigation }: Props) => {
 
   const repositories = useRepositoryApi();
 
-  const searchRepositories = async (searchedText: string | undefined, page: number = currentPage.current) => {
+  const searchRepositories = async (searchedText: string | undefined, page: number) => {
     try {
       await repositories.request({ text: searchedText, page });
       currentPage.current = page;
@@ -72,18 +72,24 @@ export const RepositoriesPage = ({ navigation }: Props) => {
       return;
     }
     setSearchExecuted(true);
-    searchRepositories(searchedText, 0);
+    searchRepositories(searchedText, 1);
     setText(searchedText);
   };
 
   const HeaderList = useMemo(
     () => (
-      <SearchBar
-        onSubmitEditing={evt => onSearchRepository(evt.nativeEvent.text)}
-        placeholder="Search repositories..."
-      />
+      <>
+        <SearchBar
+          key="search-bar"
+          onSubmitEditing={evt => onSearchRepository(evt.nativeEvent.text)}
+          placeholder="Search repositories..."
+        />
+        {repositories.data?.total_count && (
+          <TotalCounterView key="total-counter" pt={3} total={repositories.data?.total_count} />
+        )}
+      </>
     ),
-    [],
+    [repositories.data],
   );
 
   const EmptyListComponent = useMemo(
@@ -101,10 +107,11 @@ export const RepositoriesPage = ({ navigation }: Props) => {
         )}
         {text && !repositories.loading && repositories.error && (
           <EmptyContent
-            height={200}
-            source={require('../../assets/lotties/error.json')}
-            key="empty-content"
-            text={`${repositories.error}`}
+            px={2}
+            height={150}
+            source={require('../../../assets/lotties/error.json')}
+            key="error-content"
+            text={`There is an error: ${repositories.error}`}
           />
         )}
       </>
@@ -131,10 +138,17 @@ export const RepositoriesPage = ({ navigation }: Props) => {
 
   const renderItem: ListRenderItem<RepositoryInfo> = useCallback(
     ({ item }) => (
-      <RepositoryItem repository={item} onPress={() => navigation.navigate('StargazersPage', { repository: item })} />
+      <RepositoryItem
+        repository={item}
+        onPress={() => navigation.navigate('StargazersPage', { repository: item })}
+      />
     ),
     [],
   );
+
+  const handleOnMomentumScrollBegin = () => {
+    listEndReached.current = false;
+  };
 
   return (
     <FlatList
@@ -151,7 +165,7 @@ export const RepositoriesPage = ({ navigation }: Props) => {
       ListFooterComponent={ListFooterComponent}
       ItemSeparatorComponent={Divider}
       ListEmptyComponent={EmptyListComponent}
-      onMomentumScrollBegin={() => (listEndReached.current = false)}
+      onMomentumScrollBegin={handleOnMomentumScrollBegin}
       onEndReached={loadMoreData}
       onEndReachedThreshold={0.01}
     />

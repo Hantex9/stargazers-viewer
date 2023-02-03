@@ -1,17 +1,18 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { ListRenderItem, StyleSheet } from 'react-native';
 import { StackNavigationOptions, StackScreenProps } from '@react-navigation/stack';
-import { Divider, FlatList } from 'native-base';
+import { Divider, FlatList, HStack, Icon, Text } from 'native-base';
+import { AntDesign } from '@expo/vector-icons';
 
-import colors from '../constants/colors';
-import { COMMON_NAV_OPTIONS } from '../constants/commonStyle';
-import { AppNavigatorStackParams } from '../navigation/AppNavigator';
-import EmptyContent from '../components/EmptyContent';
-import RepositoryItem from '../components/RepositoryItem';
-import config from '../constants/config';
-import StargazerItem from '../components/StargazerItem';
-import useStargazersApi from '../hooks/useStargazersApi';
-import { Stargazer } from '../models/Stargazer';
+import colors from '../../constants/colors';
+import { COMMON_NAV_OPTIONS } from '../../constants/commonStyle';
+import { AppNavigatorStackParams } from '../../navigation/AppNavigator';
+import EmptyContent from '../../components/EmptyContent';
+import config from '../../constants/config';
+import StargazerItem from '../../components/StargazerItem';
+import useStargazersApi from '../../hooks/useStargazersApi';
+import { Stargazer } from '../../models/Stargazer';
+import { TotalCounterView } from '../../components/TotalCounterView';
 
 const styles = StyleSheet.create({
   container: {
@@ -20,7 +21,7 @@ const styles = StyleSheet.create({
     paddingTop: 20,
   },
   headerList: {
-    paddingHorizontal: 15,
+    paddingHorizontal: 10,
     paddingBottom: 20,
   },
   contentContainer: {
@@ -31,7 +32,7 @@ const styles = StyleSheet.create({
 
 interface Props extends StackScreenProps<AppNavigatorStackParams, 'StargazersPage'> {}
 
-export const StargazersPage = ({ route, navigation }: Props) => {
+export const StargazersPage = ({ route }: Props) => {
   const repository = route.params?.repository;
   const [endReached, setEndReached] = useState<boolean>(false);
   const currentPage = useRef<number>(1);
@@ -69,25 +70,44 @@ export const StargazersPage = ({ route, navigation }: Props) => {
     }
   };
 
+  const HeaderList = useMemo(
+    () => (
+      <>
+        <HStack key="repo-name" alignItems="center">
+          <Icon key="icon-repo" as={<AntDesign name="book" size={18} color={colors.primary} />} />
+          <Text key="text-repo" color={colors.primary} fontSize={16} pl={1} fontWeight="semibold">
+            {repository.full_name}
+          </Text>
+        </HStack>
+        <TotalCounterView key="total-count" total={repository.stargazers_count} />
+      </>
+    ),
+    [],
+  );
+
   const EmptyListComponent = useMemo(
     () => (
       <>
-        {!stargazers.loading && (
+        {!stargazers.loading && !stargazers.error && (
           <EmptyContent
             px={2}
+            height={150}
             key="empty-content"
-            source={require('../../assets/lotties/ghost.json')}
-            text="No one has this repository in their favorites :("
+            source={require('../../../assets/lotties/ghost.json')}
+            text="No one has this repository in his favorites :("
           />
         )}
-        {!stargazers.loading && stargazers.error && stargazers.data?.length === 0 && (
-          <EmptyContent
-            height={200}
-            source={require('../../assets/lotties/error.json')}
-            key="empty-content"
-            text={`${stargazers.error}`}
-          />
-        )}
+        {!stargazers.loading &&
+          stargazers.error &&
+          (!stargazers.data || stargazers.data.length === 0) && (
+            <EmptyContent
+              px={2}
+              height={200}
+              source={require('../../../assets/lotties/error.json')}
+              key="error-content"
+              text={`There is an error: ${stargazers.error}`}
+            />
+          )}
       </>
     ),
     [stargazers.loading],
@@ -96,25 +116,21 @@ export const StargazersPage = ({ route, navigation }: Props) => {
   const ListFooterComponent = useMemo(
     () => (
       <>
-        {stargazers.loading && (
-          <>
-            <StargazerItem key="1" skeleton />
-            <Divider key="el" />
-            <StargazerItem key="2" skeleton />
-            <Divider key="sep" />
-            <StargazerItem key="3" skeleton />
-            <Divider key="sep3" />
-            <StargazerItem key="4" skeleton />
-            <Divider key="sep4" />
-            <StargazerItem key="5" skeleton />
-          </>
-        )}
+        {[1, 2, 3, 4].map((el, index) => (
+          <React.Fragment key={`footer-skeleton-${index}`}>
+            <StargazerItem key={`skeleton-${index}`} skeleton />
+            <Divider key={`divider-${index}`} />
+          </React.Fragment>
+        ))}
       </>
     ),
     [stargazers.loading],
   );
 
-  const renderItem: ListRenderItem<Stargazer> = useCallback(({ item }) => <StargazerItem stargazer={item} />, []);
+  const renderItem: ListRenderItem<Stargazer> = useCallback(
+    ({ item }) => <StargazerItem stargazer={item} />,
+    [],
+  );
 
   return (
     <FlatList
@@ -122,12 +138,12 @@ export const StargazersPage = ({ route, navigation }: Props) => {
       contentContainerStyle={styles.contentContainer}
       data={stargazers.data}
       keyExtractor={item => `${item.user.login}`}
-      // ListHeaderComponent={HeaderList}
+      ListHeaderComponent={stargazers.data && stargazers.data.length > 0 ? HeaderList : null}
       ListHeaderComponentStyle={styles.headerList}
       maxToRenderPerBatch={config.defaultTotalItemsPerPage}
       initialNumToRender={config.defaultTotalItemsPerPage}
       renderItem={renderItem}
-      ListFooterComponent={ListFooterComponent}
+      ListFooterComponent={stargazers.loading ? ListFooterComponent : null}
       ItemSeparatorComponent={Divider}
       ListEmptyComponent={EmptyListComponent}
       onMomentumScrollBegin={() => {

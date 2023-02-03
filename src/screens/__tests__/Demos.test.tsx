@@ -3,7 +3,7 @@ import { render, fireEvent } from '@testing-library/react-native';
 import { Alert } from 'react-native';
 import { mocked } from 'ts-jest/utils';
 
-import { TextDemo, ButtonDemo, FormDemo } from '../StargazersPage';
+import { TextDemo, ButtonDemo, FormDemo } from '../StargazersPage/StargazersPage';
 import { useLogin } from '../../util/auth';
 
 jest.mock('../../util/auth');
@@ -32,16 +32,10 @@ describe('FormDemo', () => {
 
     const out = render(<FormDemo />);
 
-    fireEvent.changeText(
-      out.getByPlaceholderText('Enter your email...'),
-      'test@example.com',
-    );
+    fireEvent.changeText(out.getByPlaceholderText('Enter your email...'), 'test@example.com');
     expect(setEmail).toBeCalledWith('test@example.com');
 
-    fireEvent.changeText(
-      out.getByPlaceholderText('Enter your password...'),
-      'password',
-    );
+    fireEvent.changeText(out.getByPlaceholderText('Enter your password...'), 'password');
     expect(setPassword).toBeCalledWith('password');
 
     fireEvent.press(out.getByText('Sign In'));

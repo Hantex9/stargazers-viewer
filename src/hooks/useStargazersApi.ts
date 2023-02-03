@@ -39,13 +39,17 @@ function useStargazersApi(): ReturnedRepositoryHook {
           totalItems,
         });
         if (mounted.current) {
-          setData([...(data || []), ...result.data]);
+          if (page && page > 1) {
+            setData([...(data || []), ...result.data]);
+          } else {
+            setData(result.data)
+          }
           setLoading(false);
         }
         return result;
       } catch (err) {
-        if (mounted.current && err instanceof Error) {
-          setError(err?.message || 'Unexpected Error!');
+        if (mounted.current) {
+          setError((err as any)?.message || 'Unexpected Error!');
         }
         console.log(err);
         throw err;

@@ -1,5 +1,5 @@
 import config from '../constants/config';
-import { OwnerInfo, RepositoryResponse } from '../models/RepositoryResponse';
+import { RepositoryResponse } from '../models/RepositoryResponse';
 import { Stargazer } from '../models/Stargazer';
 import { Network } from '../utils/Network';
 
@@ -35,18 +35,15 @@ export const GithubServices = {
     page,
     totalItems = config.defaultTotalItemsPerPage,
   }: RequestStargazer) => {
-    return Network.get<Stargazer[]>(
-      `repos/${userRepo}/${repoName}/stargazers`,
-      {
-        headers: {
-          Accept: 'application/vnd.github.star+json',
-        },
-        params: {
-          per_page: totalItems,
-          page,
-        },
+    return Network.get<Stargazer[]>(`repos/${userRepo}/${repoName}/stargazers`, {
+      headers: {
+        Accept: 'application/vnd.github.star+json',
       },
-    );
+      params: {
+        per_page: totalItems,
+        page,
+      },
+    });
   },
 };
 
