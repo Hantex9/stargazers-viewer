@@ -26,18 +26,18 @@ const styles = StyleSheet.create({
   },
 });
 
-type Props = {
+type RespositoriesListProps = {
   onSearch: (searchedText: string) => void | undefined;
   totalElements?: number;
   data?: RepositoryInfo[];
   loading?: boolean;
   error?: string;
   searchedText?: string;
-  onSelectRepository: (item: RepositoryInfo) => void | undefined;
-  onLoadMore: () => void | undefined;
+  onSelectRepository?: (item: RepositoryInfo) => void | undefined;
+  onLoadMore?: () => void | undefined;
 };
 
-export const RepositoriesList = ({
+export const RepositoriesList: React.FunctionComponent<RespositoriesListProps> = ({
   searchedText,
   loading,
   error,
@@ -47,7 +47,7 @@ export const RepositoriesList = ({
   onLoadMore,
   totalElements,
   ...rest
-}: Props) => {
+}) => {
   const listEndReached = useRef<boolean>(false);
 
   const loadMoreData = () => {
@@ -58,7 +58,7 @@ export const RepositoriesList = ({
       data?.length !== undefined &&
       totalElements > data?.length
     ) {
-      onLoadMore();
+      onLoadMore?.();
       listEndReached.current = true;
     }
   };
@@ -118,7 +118,7 @@ export const RepositoriesList = ({
   );
 
   const renderItem: ListRenderItem<RepositoryInfo> = useCallback(
-    ({ item }) => <RepositoryItem repository={item} onPress={() => onSelectRepository(item)} />,
+    ({ item }) => <RepositoryItem repository={item} onPress={() => onSelectRepository?.(item)} />,
     [],
   );
 

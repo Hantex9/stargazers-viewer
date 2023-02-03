@@ -13,6 +13,7 @@ import StargazerItem from '../../components/StargazerItem';
 import useStargazersApi from '../../hooks/useStargazersApi';
 import { Stargazer } from '../../models/Stargazer';
 import { TotalCounterView } from '../../components/TotalCounterView';
+import { StargazersList } from './components/StargazersList';
 
 const styles = StyleSheet.create({
   container: {
@@ -36,7 +37,6 @@ export const StargazersPage = ({ route }: Props) => {
   const repository = route.params?.repository;
   const [endReached, setEndReached] = useState<boolean>(false);
   const currentPage = useRef<number>(1);
-  const listEndReached = useRef<boolean>(false);
 
   const stargazers = useStargazersApi();
 
@@ -64,94 +64,18 @@ export const StargazersPage = ({ route }: Props) => {
   };
 
   const loadMoreData = () => {
-    if (!stargazers.loading && !endReached && !listEndReached.current) {
+    if (!stargazers.loading && !endReached) {
       fetchStargazers(currentPage.current + 1);
-      listEndReached.current = true;
     }
   };
 
-  const HeaderList = useMemo(
-    () => (
-      <>
-        <HStack key="repo-name" alignItems="center">
-          <Icon key="icon-repo" as={<AntDesign name="book" size={18} color={colors.primary} />} />
-          <Text key="text-repo" color={colors.primary} fontSize={16} pl={1} fontWeight="semibold">
-            {repository.full_name}
-          </Text>
-        </HStack>
-        <TotalCounterView key="total-count" total={repository.stargazers_count} />
-      </>
-    ),
-    [],
-  );
-
-  const EmptyListComponent = useMemo(
-    () => (
-      <>
-        {!stargazers.loading && !stargazers.error && (
-          <EmptyContent
-            px={2}
-            height={150}
-            key="empty-content"
-            source={require('../../../assets/lotties/ghost.json')}
-            text="No one has this repository in his favorites :("
-          />
-        )}
-        {!stargazers.loading &&
-          stargazers.error &&
-          (!stargazers.data || stargazers.data.length === 0) && (
-            <EmptyContent
-              px={2}
-              height={200}
-              source={require('../../../assets/lotties/error.json')}
-              key="error-content"
-              text={`There is an error: ${stargazers.error}`}
-            />
-          )}
-      </>
-    ),
-    [stargazers.loading],
-  );
-
-  const ListFooterComponent = useMemo(
-    () => (
-      <>
-        {[1, 2, 3, 4].map((el, index) => (
-          <React.Fragment key={`footer-skeleton-${index}`}>
-            <StargazerItem key={`skeleton-${index}`} skeleton />
-            <Divider key={`divider-${index}`} />
-          </React.Fragment>
-        ))}
-      </>
-    ),
-    [stargazers.loading],
-  );
-
-  const renderItem: ListRenderItem<Stargazer> = useCallback(
-    ({ item }) => <StargazerItem stargazer={item} />,
-    [],
-  );
-
   return (
-    <FlatList
-      style={styles.container}
-      contentContainerStyle={styles.contentContainer}
+    <StargazersList
+      repository={repository}
       data={stargazers.data}
-      keyExtractor={item => `${item.user.login}`}
-      ListHeaderComponent={stargazers.data && stargazers.data.length > 0 ? HeaderList : null}
-      ListHeaderComponentStyle={styles.headerList}
-      maxToRenderPerBatch={config.defaultTotalItemsPerPage}
-      initialNumToRender={config.defaultTotalItemsPerPage}
-      renderItem={renderItem}
-      ListFooterComponent={stargazers.loading ? ListFooterComponent : null}
-      ItemSeparatorComponent={Divider}
-      ListEmptyComponent={EmptyListComponent}
-      onMomentumScrollBegin={() => {
-        listEndReached.current = false;
-      }}
-      onEndReached={loadMoreData}
-      windowSize={5}
-      onEndReachedThreshold={0.01}
+      loading={stargazers.loading}
+      error={stargazers.error}
+      onLoadMore={loadMoreData}
     />
   );
 };

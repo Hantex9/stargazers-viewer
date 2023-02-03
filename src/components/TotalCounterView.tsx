@@ -5,7 +5,7 @@ import { InterfaceHStackProps } from 'native-base/lib/typescript/components/prim
 import { normalizeStarCounter } from '../utils/generalFunctions';
 
 type TotalCounterViewProps = {
-  total: number;
+  total?: number;
 };
 
 export const TotalCounterView = ({
@@ -15,7 +15,7 @@ export const TotalCounterView = ({
   return (
     <HStack {...rest}>
       <Text>Showing </Text>
-      <Text fontWeight="semibold">{normalizeStarCounter(total)}</Text>
+      <Text fontWeight="semibold">{total ? normalizeStarCounter(total) : '-'}</Text>
       <Text> results</Text>
     </HStack>
   );

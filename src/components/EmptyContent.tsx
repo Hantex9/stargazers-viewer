@@ -10,7 +10,12 @@ type EmptyContentProps = {
   height?: number;
 };
 
-const EmptyContent = ({ text, source, height = 220, ...rest }: EmptyContentProps & InterfaceStackProps) => (
+const EmptyContent = ({
+  text,
+  source,
+  height = 220,
+  ...rest
+}: EmptyContentProps & InterfaceStackProps) => (
   <Stack flex={1} {...rest}>
     <Animated.View
       style={{
