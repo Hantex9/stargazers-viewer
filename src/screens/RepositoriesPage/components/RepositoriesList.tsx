@@ -10,6 +10,7 @@ import colors from '../../../constants/colors';
 import config from '../../../constants/config';
 import { RepositoryInfo } from '../../../models/RepositoryResponse';
 import { SearchBar } from '../../../components/SearchBar';
+import { generatePlaceholderArray } from '../../../utils/generalFunctions';
 
 const styles = StyleSheet.create({
   container: {
@@ -37,6 +38,7 @@ type RespositoriesListProps = {
   onLoadMore?: () => void | undefined;
 };
 
+// List component with the Repositories
 export const RepositoriesList: React.FunctionComponent<RespositoriesListProps> = ({
   searchedText,
   loading,
@@ -50,6 +52,7 @@ export const RepositoriesList: React.FunctionComponent<RespositoriesListProps> =
 }) => {
   const listEndReached = useRef<boolean>(false);
 
+  // Load more data when it reaches the end of the list
   const loadMoreData = () => {
     if (
       !loading &&
@@ -63,6 +66,7 @@ export const RepositoriesList: React.FunctionComponent<RespositoriesListProps> =
     }
   };
 
+  // Header of the list in a memo component in order to avoid useless re-renders
   const HeaderList = useMemo(
     () => (
       <>
@@ -74,7 +78,7 @@ export const RepositoriesList: React.FunctionComponent<RespositoriesListProps> =
         {totalElements && <TotalCounterView key="total-counter" pt={3} total={totalElements} />}
       </>
     ),
-    [data],
+    [totalElements],
   );
 
   const EmptyListComponent = useMemo(
@@ -104,17 +108,19 @@ export const RepositoriesList: React.FunctionComponent<RespositoriesListProps> =
     [searchedText, loading],
   );
 
+  // Footer of the component showed when there is something loading with the pagination
   const ListFooterComponent = useMemo(
     () => (
       <>
-        <RepositoryItem key="1" skeleton />
-        <Divider key="el" />
-        <RepositoryItem key="2" skeleton />
-        <Divider key="sep" />
-        <RepositoryItem key="3" skeleton />
+        {generatePlaceholderArray(5).map((el, index) => (
+          <React.Fragment key={`skeleton-container-${index}`}>
+            <RepositoryItem key={`skeleton-repo-${index}`} skeleton />
+            <Divider key={`divider-repo-${index}`} />
+          </React.Fragment>
+        ))}
       </>
     ),
-    [loading],
+    [],
   );
 
   const renderItem: ListRenderItem<RepositoryInfo> = useCallback(
@@ -122,6 +128,7 @@ export const RepositoriesList: React.FunctionComponent<RespositoriesListProps> =
     [],
   );
 
+  // Method used to avoid to invoke too many times the "onEndReached" function
   const handleOnMomentumScrollBegin = () => {
     listEndReached.current = false;
   };

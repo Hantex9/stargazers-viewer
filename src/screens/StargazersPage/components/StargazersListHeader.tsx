@@ -12,6 +12,7 @@ type StargazersListHeaderProps = {
   counter?: number;
 };
 
+// Header of the Stargazers List indicating the repo's name and the star counter
 const StargazersListHeader: React.FunctionComponent<
   StargazersListHeaderProps & InterfaceHStackProps
 > = ({ name, counter, ...rest }) => {

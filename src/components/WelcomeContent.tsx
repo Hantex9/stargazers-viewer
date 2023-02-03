@@ -10,6 +10,7 @@ type WelcomeContentProps = {
   title?: string;
 };
 
+// Common content used as Welcome Page with some kind of animations
 const WelcomeContent = ({ text, height = 220, title, ...rest }: WelcomeContentProps) => (
   <Stack flex={1} px={2} {...rest}>
     <Animated.View

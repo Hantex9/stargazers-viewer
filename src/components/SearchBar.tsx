@@ -3,6 +3,7 @@ import React from 'react';
 import { Icon, IInputProps, Input } from 'native-base';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 
+// Common component used as a SearchBar
 export const SearchBar = ({ ...rest }: IInputProps) => {
   return (
     <Input

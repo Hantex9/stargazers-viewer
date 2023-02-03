@@ -10,6 +10,7 @@ type EmptyContentProps = {
   height?: number;
 };
 
+// Component used for the empy content in a List with the Lottie animation and text customizable
 const EmptyContent = ({
   text,
   source,

@@ -9,6 +9,7 @@ import StargazerItem from '../../../components/StargazerItem';
 import { Stargazer } from '../../../models/Stargazer';
 import { RepositoryInfo } from '../../../models/RepositoryResponse';
 import StargazersListHeader from './StargazersListHeader';
+import { generatePlaceholderArray } from '../../../utils/generalFunctions';
 
 const styles = StyleSheet.create({
   container: {
@@ -79,7 +80,7 @@ export const StargazersList: React.FunctionComponent<StargazersListProps> = ({
   const ListFooterComponent = useMemo(
     () => (
       <>
-        {[1, 2, 3, 4].map((el, index) => (
+        {generatePlaceholderArray(5).map((el, index) => (
           <React.Fragment key={`footer-skeleton-${index}`}>
             <StargazerItem key={`skeleton-${index}`} skeleton />
             <Divider key={`divider-${index}`} />
@@ -117,6 +118,7 @@ export const StargazersList: React.FunctionComponent<StargazersListProps> = ({
       ItemSeparatorComponent={Divider}
       ListEmptyComponent={EmptyListComponent}
       onMomentumScrollBegin={() => {
+        // Method used to avoid to invoke too many times the "onEndReached" function
         listEndReached.current = false;
       }}
       onEndReached={loadMoreData}

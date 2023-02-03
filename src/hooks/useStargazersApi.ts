@@ -10,12 +10,17 @@ interface ReturnedRepositoryHook {
   request: (request: RequestStargazer) => any;
 }
 
+/**
+ * Custom Hook used to retrieve the repositories, it manage the loading and
+ * error doing all the business logic to append items to the list
+ */
 function useStargazersApi(): ReturnedRepositoryHook {
   const [data, setData] = useState<Stargazer[]>();
   const [error, setError] = useState<string | null>('');
   const [loading, setLoading] = useState<boolean>(false);
   const mounted = useRef<boolean>(true);
 
+  // When the component is unmounted, dismiss every Axios pending requests
   useEffect(
     () => () => {
       mounted.current = false;
@@ -24,6 +29,9 @@ function useStargazersApi(): ReturnedRepositoryHook {
     [],
   );
 
+  /**
+   * Method that invokes an axios http request to the "getRepoStargazers" service
+   */
   const request = useCallback(
     async ({ userRepo, repoName, page, totalItems }: RequestStargazer): Promise<AxiosResponse<Stargazer[], any> | null> => {
       if (!mounted.current) {

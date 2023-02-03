@@ -7,6 +7,7 @@ import {
 } from 'react-native';
 import React from 'react';
 
+// Common component used to indicate if the content (children) is touchable with a feedback based on the OS
 export const TouchableContent = ({
   children,
   ...rest

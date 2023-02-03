@@ -14,6 +14,7 @@ type RepositoryItemProps = {
   onPress?: () => void;
 };
 
+// Item component showed into the Repository List
 const RepositoryItem = ({ repository, skeleton, onPress = () => null }: RepositoryItemProps) => {
   return (
     <TouchableContent onPress={onPress}>

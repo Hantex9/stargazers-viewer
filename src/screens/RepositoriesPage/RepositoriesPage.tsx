@@ -11,6 +11,7 @@ type Props = {
   navigation: StackNavigationProp<AppNavigatorStackParams, 'RepositoriesPage'>;
 };
 
+// Main page of the repositories page with a List inside
 export const RepositoriesPage = ({ navigation }: Props) => {
   const [text, setText] = useState<string>();
   const [searchExecuted, setSearchExecuted] = useState<boolean>(false);
@@ -18,6 +19,7 @@ export const RepositoriesPage = ({ navigation }: Props) => {
 
   const repositories = useRepositoryApi();
 
+  // Method used to search a repository by text and page
   const searchRepositories = async (searchedText: string | undefined, page: number) => {
     try {
       await repositories.request({ text: searchedText, page });
@@ -29,10 +31,12 @@ export const RepositoriesPage = ({ navigation }: Props) => {
     }
   };
 
+  // Method used to load more data going to the next page
   const loadMoreData = () => {
     searchRepositories(text, currentPage.current + 1);
   };
 
+  // Event invoked when there is a search made by the user using the SearchBar in to the Header's RepositoriesList
   const onSearchRepository = (searchedText: string) => {
     if (!searchedText) {
       return;

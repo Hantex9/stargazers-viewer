@@ -12,10 +12,13 @@ type StargazerItemProps = {
   skeleton?: boolean;
 };
 
+// StargazerItem showed into the StargazersList
 const StargazerItem = ({ stargazer, skeleton, ...rest }: StargazerItemProps) => {
   return (
     <HStack flex={1} {...rest} mt="8px">
-      {!skeleton && <Avatar mx="8px" mb="8px" size="48px" source={{ uri: stargazer?.user.avatar_url }} />}
+      {!skeleton && (
+        <Avatar mx="8px" mb="8px" size="48px" source={{ uri: stargazer?.user.avatar_url }} />
+      )}
       {skeleton && <Skeleton size="48px" mx="8px" mb="8px" endColor="gray.300" rounded="full" />}
       <VStack ml="4px" mb="10px" justifyContent="space-between" flex={1}>
         {!skeleton && (

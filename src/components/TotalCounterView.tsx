@@ -8,6 +8,7 @@ type TotalCounterViewProps = {
   total?: number;
 };
 
+// Component showing a total amount used for the searches
 export const TotalCounterView = ({
   total,
   ...rest
