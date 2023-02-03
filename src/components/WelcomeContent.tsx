@@ -3,6 +3,7 @@ import { Stack, Text } from 'native-base';
 import React from 'react';
 import ReAnimated, { FadeInLeft, FadeInRight } from 'react-native-reanimated';
 import { Animated } from 'react-native';
+import { InterfaceStackProps } from 'native-base/lib/typescript/components/primitives/Stack/Stack';
 
 type WelcomeContentProps = {
   text: string;
@@ -11,8 +12,13 @@ type WelcomeContentProps = {
 };
 
 // Common content used as Welcome Page with some kind of animations
-const WelcomeContent = ({ text, height = 220, title, ...rest }: WelcomeContentProps) => (
-  <Stack flex={1} px={2} {...rest}>
+const WelcomeContent = ({
+  text,
+  height = 220,
+  title,
+  ...rest
+}: WelcomeContentProps & InterfaceStackProps) => (
+  <Stack testID="welcome-content-container" flex={1} px={2} {...rest}>
     <Animated.View
       style={{
         justifyContent: 'center',

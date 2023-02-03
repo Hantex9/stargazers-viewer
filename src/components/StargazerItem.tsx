@@ -23,14 +23,14 @@ const StargazerItem = ({ stargazer, skeleton, ...rest }: StargazerItemProps) => 
       <VStack ml="4px" mb="10px" justifyContent="space-between" flex={1}>
         {!skeleton && (
           <>
-            <Text fontWeight="bold" fontSize="16px">
+            <Text testID="user-name" fontWeight="bold" fontSize="16px">
               {stargazer?.user.login}
             </Text>
             <HStack alignContent="center" alignItems="center">
               {stargazer && (
                 <>
                   <Icon as={<AntDesign name="staro" size={18} color={colors.primary} />} />
-                  <Text color="muted.500" pl="4px" fontWeight="medium">
+                  <Text testID="starred-at-text" color="muted.500" pl="4px" fontWeight="medium">
                     Starred at {moment(stargazer?.starred_at).format('MMM DD, YYYY')}
                   </Text>
                 </>

@@ -1,5 +1,6 @@
 import { HStack, Icon, Skeleton, Text, VStack } from 'native-base';
 import React, { memo } from 'react';
+import { TouchableNativeFeedbackProps, TouchableOpacityProps } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
 import moment from 'moment';
 
@@ -15,13 +16,15 @@ type RepositoryItemProps = {
 };
 
 // Item component showed into the Repository List
-const RepositoryItem = ({ repository, skeleton, onPress = () => null }: RepositoryItemProps) => {
+const RepositoryItem: React.FunctionComponent<
+  RepositoryItemProps & (TouchableNativeFeedbackProps | TouchableOpacityProps)
+> = ({ repository, skeleton, onPress = () => null }) => {
   return (
     <TouchableContent onPress={onPress}>
       <HStack px="15px" py="12px">
         <VStack pr="6px" pt="5px">
           {skeleton ? (
-            <Skeleton size="18px" endColor="gray.300" rounded="full" />
+            <Skeleton testID="skeleton-repository" size="18px" endColor="gray.300" rounded="full" />
           ) : (
             <Icon as={<AntDesign name="book" size={18} color={colors.primary} />} />
           )}
@@ -29,10 +32,19 @@ const RepositoryItem = ({ repository, skeleton, onPress = () => null }: Reposito
         <VStack flex={1}>
           {!skeleton && repository && (
             <>
-              <Text color={colors.primary} fontSize={16} fontWeight="semibold">
+              <Text
+                testID="repository-name"
+                color={colors.primary}
+                fontSize={16}
+                fontWeight="semibold"
+              >
                 {repository.full_name}
               </Text>
-              {repository.description && <Text fontSize={14}>{repository.description}</Text>}
+              {repository.description && (
+                <Text testID="repository-description" fontSize={14}>
+                  {repository.description}
+                </Text>
+              )}
             </>
           )}
           {skeleton && <Skeleton.Text endColor="gray.300" />}
@@ -41,7 +53,7 @@ const RepositoryItem = ({ repository, skeleton, onPress = () => null }: Reposito
               {!skeleton && repository && (
                 <>
                   <Icon as={<AntDesign name="staro" size={18} color={colors.primary} />} />
-                  <Text fontSize={14} pl="4px">
+                  <Text testID="repository-star-counter" fontSize={14} pl="4px">
                     {normalizeStarCounter(repository.stargazers_count)}
                   </Text>
                 </>
@@ -54,7 +66,7 @@ const RepositoryItem = ({ repository, skeleton, onPress = () => null }: Reposito
               )}
             </HStack>
             {!skeleton && repository && (
-              <Text color="muted.500">
+              <Text testID="repository-updated-at-text" color="muted.500">
                 Updated on {moment(repository.updated_at).format('MMM D, YYYY')}
               </Text>
             )}

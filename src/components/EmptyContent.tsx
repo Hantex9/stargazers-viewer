@@ -5,7 +5,7 @@ import React from 'react';
 import { Animated } from 'react-native';
 
 type EmptyContentProps = {
-  text: string;
+  text?: string;
   source?: any;
   height?: number;
 };
@@ -17,7 +17,7 @@ const EmptyContent = ({
   height = 220,
   ...rest
 }: EmptyContentProps & InterfaceStackProps) => (
-  <Stack flex={1} {...rest}>
+  <Stack testID="empty-content" flex={1} {...rest}>
     <Animated.View
       style={{
         justifyContent: 'center',
@@ -29,14 +29,17 @@ const EmptyContent = ({
         source={source || require('../../assets/lotties/no-data.json')}
         autoPlay
         loop
+        testID="lottie-animation"
         style={{
           height,
         }}
       />
     </Animated.View>
-    <Text fontWeight="bold" fontSize={24} color="muted.600" textAlign="center">
-      {text}
-    </Text>
+    {text && (
+      <Text fontWeight="bold" fontSize={24} color="muted.600" textAlign="center">
+        {text}
+      </Text>
+    )}
   </Stack>
 );
 

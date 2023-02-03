@@ -1,6 +1,7 @@
 import React, { useRef, useMemo, useCallback } from 'react';
 import { Divider } from 'native-base';
 import { ListRenderItem, FlatList, StyleSheet } from 'react-native';
+import { InterfaceFlatListProps } from 'native-base/lib/typescript/components/basic/FlatList/types';
 
 import EmptyContent from '../../../components/EmptyContent';
 import RepositoryItem from '../../../components/RepositoryItem';
@@ -34,6 +35,7 @@ type RespositoriesListProps = {
   loading?: boolean;
   error?: string;
   searchedText?: string;
+  testID?: string;
   onSelectRepository?: (item: RepositoryInfo) => void | undefined;
   onLoadMore?: () => void | undefined;
 };
@@ -48,6 +50,7 @@ export const RepositoriesList: React.FunctionComponent<RespositoriesListProps> =
   onSelectRepository,
   onLoadMore,
   totalElements,
+  testID,
   ...rest
 }) => {
   const listEndReached = useRef<boolean>(false);
@@ -71,11 +74,19 @@ export const RepositoriesList: React.FunctionComponent<RespositoriesListProps> =
     () => (
       <>
         <SearchBar
+          testID="search-bar-view"
           key="search-bar"
           onSubmitEditing={evt => onSearch(evt.nativeEvent.text)}
           placeholder="Search repositories..."
         />
-        {totalElements && <TotalCounterView key="total-counter" pt={3} total={totalElements} />}
+        {totalElements && (
+          <TotalCounterView
+            testID="total-counter-view"
+            key="total-counter"
+            pt={3}
+            total={totalElements}
+          />
+        )}
       </>
     ),
     [totalElements],
@@ -85,10 +96,15 @@ export const RepositoriesList: React.FunctionComponent<RespositoriesListProps> =
     () => (
       <>
         {searchedText && !loading && !error && (
-          <EmptyContent key="empty-content" text={`No results for repository '${searchedText}'`} />
+          <EmptyContent
+            testID="empty-content-view"
+            key="empty-content"
+            text={`No results for repository '${searchedText}'`}
+          />
         )}
         {!searchedText && !loading && (
           <WelcomeContent
+            testID="welcome-content-view"
             key="welcome-content"
             title="Hello!"
             text="You can start this demo by searching a repository"
@@ -96,6 +112,7 @@ export const RepositoriesList: React.FunctionComponent<RespositoriesListProps> =
         )}
         {searchedText && !loading && error && (
           <EmptyContent
+            testID="error-content-view"
             px={2}
             height={150}
             source={require('../../../../assets/lotties/error.json')}
@@ -114,7 +131,7 @@ export const RepositoriesList: React.FunctionComponent<RespositoriesListProps> =
       <>
         {generatePlaceholderArray(5).map((el, index) => (
           <React.Fragment key={`skeleton-container-${index}`}>
-            <RepositoryItem key={`skeleton-repo-${index}`} skeleton />
+            <RepositoryItem testID="skeleton-item" key={`skeleton-repo-${index}`} skeleton />
             <Divider key={`divider-repo-${index}`} />
           </React.Fragment>
         ))}
@@ -124,7 +141,13 @@ export const RepositoriesList: React.FunctionComponent<RespositoriesListProps> =
   );
 
   const renderItem: ListRenderItem<RepositoryInfo> = useCallback(
-    ({ item }) => <RepositoryItem repository={item} onPress={() => onSelectRepository?.(item)} />,
+    ({ item }) => (
+      <RepositoryItem
+        testID={item.full_name}
+        repository={item}
+        onPress={() => onSelectRepository?.(item)}
+      />
+    ),
     [],
   );
 
@@ -135,6 +158,7 @@ export const RepositoriesList: React.FunctionComponent<RespositoriesListProps> =
 
   return (
     <FlatList
+      testID="repositories-list-view"
       style={styles.container}
       contentContainerStyle={styles.contentContainer}
       data={data}
@@ -143,7 +167,6 @@ export const RepositoriesList: React.FunctionComponent<RespositoriesListProps> =
       ListHeaderComponentStyle={styles.headerList}
       maxToRenderPerBatch={config.defaultTotalItemsPerPage}
       initialNumToRender={config.defaultTotalItemsPerPage}
-      renderItem={renderItem}
       windowSize={5}
       ListFooterComponent={loading ? ListFooterComponent : null}
       ItemSeparatorComponent={Divider}
@@ -151,6 +174,7 @@ export const RepositoriesList: React.FunctionComponent<RespositoriesListProps> =
       onMomentumScrollBegin={handleOnMomentumScrollBegin}
       onEndReached={loadMoreData}
       onEndReachedThreshold={0.01}
+      renderItem={renderItem}
       {...rest}
     />
   );

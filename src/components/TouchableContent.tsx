@@ -8,10 +8,9 @@ import {
 import React from 'react';
 
 // Common component used to indicate if the content (children) is touchable with a feedback based on the OS
-export const TouchableContent = ({
-  children,
-  ...rest
-}: TouchableNativeFeedbackProps | TouchableOpacityProps) => {
+export const TouchableContent: React.FunctionComponent<
+  TouchableNativeFeedbackProps | TouchableOpacityProps
+> = ({ children, ...rest }) => {
   return Platform.OS === 'android' ? (
     <TouchableNativeFeedback {...rest}>{children}</TouchableNativeFeedback>
   ) : (

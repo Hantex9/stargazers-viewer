@@ -1,7 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { NativeBaseProvider, View } from 'native-base';
-import { QueryClient, QueryClientProvider } from 'react-query';
 
 import * as SplashScreen from 'expo-splash-screen';
 import * as Font from 'expo-font';
@@ -11,9 +10,6 @@ import { AppNavigator } from './navigation/AppNavigator';
 
 // Keep the splash screen visible while fetching resources
 SplashScreen.preventAutoHideAsync();
-
-// Initializing the Query client used for the integration with React Query
-const queryClient = new QueryClient();
 
 export default function App() {
   const [appIsReady, setAppIsReady] = useState(false);
@@ -48,10 +44,8 @@ export default function App() {
   return (
     <NativeBaseProvider>
       <View flex={1} onLayout={onLayoutRootView}>
-        <QueryClientProvider client={queryClient}>
-          <StatusBar style="light" />
-          <AppNavigator />
-        </QueryClientProvider>
+        <StatusBar style="light" />
+        <AppNavigator />
       </View>
     </NativeBaseProvider>
   );

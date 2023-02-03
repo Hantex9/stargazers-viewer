@@ -9,7 +9,6 @@ export interface RepositoryInfo {
   full_name: string;
   owner: OwnerInfo;
   description?: string;
-  stargazers_url: string;
   stargazers_count: number;
   updated_at: Date;
 }

@@ -4,7 +4,7 @@ import { StackNavigationOptions, StackNavigationProp } from '@react-navigation/s
 import { AppNavigatorStackParams } from '../../navigation/AppNavigator';
 
 import { COMMON_NAV_OPTIONS } from '../../constants/commonStyle';
-import useRepositoryApi from '../../hooks/useRepositoryApi';
+import { useRepositoryApi } from '../../hooks/useRepositoryApi';
 import { RepositoriesList } from './components/RepositoriesList';
 
 type Props = {

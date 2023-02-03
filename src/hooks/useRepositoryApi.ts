@@ -20,7 +20,7 @@ interface ReturnedRepositoryHook {
  * Custom Hook used to retrieve the repositories, it manage the loading and
  * error doing all the business logic to append items to the list
  */
-function useRepositoryApi(): ReturnedRepositoryHook {
+export function useRepositoryApi(): ReturnedRepositoryHook {
   const [data, setData] = useState<RepositoryResponse>();
   const [error, setError] = useState<string | null>('');
   const [loading, setLoading] = useState<boolean>(false);
@@ -83,5 +83,3 @@ function useRepositoryApi(): ReturnedRepositoryHook {
     request,
   };
 }
-
-export default useRepositoryApi;
