@@ -18,9 +18,9 @@ type RepositoryItemProps = {
 // Item component showed into the Repository List
 const RepositoryItem: React.FunctionComponent<
   RepositoryItemProps & (TouchableNativeFeedbackProps | TouchableOpacityProps)
-> = ({ repository, skeleton, onPress = () => null }) => {
+> = ({ repository, skeleton, onPress = () => null, ...rest }) => {
   return (
-    <TouchableContent onPress={onPress}>
+    <TouchableContent onPress={onPress} testID="repository-item" {...rest}>
       <HStack px="15px" py="12px">
         <VStack pr="6px" pt="5px">
           {skeleton ? (

@@ -1,19 +1,18 @@
 import axios from 'axios';
 import config from '../constants/config';
-import Config from '../constants/config';
 
 /**
  * Axios defaults
  */
-axios.defaults.baseURL = Config.baseUrl;
-axios.defaults.timeout = Config.defaultTimeoutRequests;
+axios.defaults.baseURL = config.baseUrl;
+axios.defaults.timeout = config.defaultTimeoutRequests;
 
 // Headers
 axios.defaults.headers.common['Content-Type'] = 'application/json';
 axios.defaults.headers.common.Accept = 'application/json';
-if (config.githubApiToken) {
-  axios.defaults.headers.common.Authorization = 'Bearer ' + config.githubApiToken;
-}
+// if (config.githubApiToken) {
+//   axios.defaults.headers.common.Authorization = `Bearer ${config.githubApiToken}`;
+// }
 
 /**
  * Response Interceptor

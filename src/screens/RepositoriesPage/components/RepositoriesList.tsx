@@ -1,7 +1,6 @@
 import React, { useRef, useMemo, useCallback } from 'react';
 import { Divider } from 'native-base';
 import { ListRenderItem, FlatList, StyleSheet } from 'react-native';
-import { InterfaceFlatListProps } from 'native-base/lib/typescript/components/basic/FlatList/types';
 
 import EmptyContent from '../../../components/EmptyContent';
 import RepositoryItem from '../../../components/RepositoryItem';
@@ -129,7 +128,7 @@ export const RepositoriesList: React.FunctionComponent<RespositoriesListProps> =
   const ListFooterComponent = useMemo(
     () => (
       <>
-        {generatePlaceholderArray(5).map((el, index) => (
+        {generatePlaceholderArray(3).map((el, index) => (
           <React.Fragment key={`skeleton-container-${index}`}>
             <RepositoryItem testID="skeleton-item" key={`skeleton-repo-${index}`} skeleton />
             <Divider key={`divider-repo-${index}`} />

@@ -7,6 +7,7 @@ import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 export const SearchBar = ({ ...rest }: IInputProps) => {
   return (
     <Input
+      testID="searchbar"
       width="100%"
       borderRadius="12"
       py="3"

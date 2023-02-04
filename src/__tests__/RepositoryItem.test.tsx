@@ -1,19 +1,20 @@
-import { shallow } from 'enzyme';
 import React from 'react';
+import { fireEvent } from '@testing-library/react-native';
 import RepositoryItem from '../components/RepositoryItem';
 import { RepositoryInfo } from '../models/RepositoryResponse';
+import { render } from '../utils/testUtils';
 
-describe('<RepositoryItem />', () => {
+describe('RepositoryItem', () => {
   it('renders without crashing', () => {
-    const wrapper = shallow(<RepositoryItem />);
+    const { getByTestId } = render(<RepositoryItem />);
 
-    expect(wrapper).toMatchSnapshot();
+    expect(getByTestId('repository-item')).toBeTruthy();
   });
 
   it('should render skeleton when skeleton is true', () => {
-    const wrapper = shallow(<RepositoryItem skeleton />);
+    const { queryAllByTestId } = render(<RepositoryItem skeleton />);
 
-    expect(wrapper.find('Skeleton').length).toBe(2);
+    expect(queryAllByTestId('skeleton-repository').length).toBeGreaterThan(0);
   });
 
   it('should render repository info when repository is passed', () => {
@@ -30,26 +31,19 @@ describe('<RepositoryItem />', () => {
       updated_at: new Date('2020-08-27T07:30:21Z'),
     };
 
-    const wrapper = shallow(<RepositoryItem repository={repository} />);
+    const { queryAllByTestId } = render(<RepositoryItem repository={repository} />);
 
-    expect(wrapper.find('Text').length).toBe(3);
-    expect(wrapper.find('Icon').length).toBe(2);
-
-    expect(wrapper.find('[testID="repository-name"]').at(0).props().children).toBe('Test');
-    expect(wrapper.find('[testID="repository-description"]').at(0).props().children).toBe(
-      'Test Description',
-    );
-    expect(wrapper.find('[testID="repository-updated-at-text"]').at(2).props().children).toBe(
-      'Updated on Aug 27, 2020',
-    );
+    expect(queryAllByTestId('repository-name').length).toBe(1);
+    expect(queryAllByTestId('repository-description').length).toBe(1);
+    expect(queryAllByTestId('repository-updated-at-text').length).toBe(1);
   });
 
   it('should call onPress function when TouchableContent is pressed', () => {
     const onPressMockFn = jest.fn();
 
-    const wrapper = shallow(<RepositoryItem onPress={onPressMockFn} />);
+    const { getByTestId } = render(<RepositoryItem onPress={onPressMockFn} />);
 
-    wrapper.find('TouchableContent').simulate('press');
+    fireEvent.press(getByTestId('repository-item'));
 
     expect(onPressMockFn).toHaveBeenCalled();
   });

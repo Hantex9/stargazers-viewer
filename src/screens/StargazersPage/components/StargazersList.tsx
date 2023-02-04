@@ -65,6 +65,7 @@ export const StargazersList: React.FunctionComponent<StargazersListProps> = ({
         )}
         {!loading && error && (!data || data.length === 0) && (
           <EmptyContent
+            testID="error-content"
             px={2}
             height={200}
             source={require('../../../../assets/lotties/error.json')}
@@ -82,7 +83,7 @@ export const StargazersList: React.FunctionComponent<StargazersListProps> = ({
       <>
         {generatePlaceholderArray(5).map((el, index) => (
           <React.Fragment key={`footer-skeleton-${index}`}>
-            <StargazerItem key={`skeleton-${index}`} skeleton />
+            <StargazerItem testID="skeleton-item" key={`skeleton-${index}`} skeleton />
             <Divider key={`divider-${index}`} />
           </React.Fragment>
         ))}

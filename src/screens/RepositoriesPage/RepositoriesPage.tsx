@@ -48,6 +48,7 @@ export const RepositoriesPage = ({ navigation }: Props) => {
 
   return (
     <RepositoriesList
+      testID="repositories-list"
       data={!searchExecuted ? repositories.data?.items : []}
       totalElements={repositories.data?.total_count}
       onSearch={onSearchRepository}

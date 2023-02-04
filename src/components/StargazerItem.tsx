@@ -2,18 +2,23 @@ import moment from 'moment';
 import { Avatar, HStack, Icon, Skeleton, Text, VStack } from 'native-base';
 import React, { memo } from 'react';
 import { AntDesign } from '@expo/vector-icons';
+import { InterfaceHStackProps } from 'native-base/lib/typescript/components/primitives/Stack/HStack';
 
 import colors from '../constants/colors';
 import { Stargazer } from '../models/Stargazer';
 import { equalProps } from '../utils/generalFunctions';
 
-type StargazerItemProps = {
+export type StargazerItemProps = {
   stargazer?: Stargazer;
   skeleton?: boolean;
 };
 
 // StargazerItem showed into the StargazersList
-const StargazerItem = ({ stargazer, skeleton, ...rest }: StargazerItemProps) => {
+const StargazerItem = ({
+  stargazer,
+  skeleton,
+  ...rest
+}: StargazerItemProps & InterfaceHStackProps) => {
   return (
     <HStack flex={1} {...rest} mt="8px">
       {!skeleton && (

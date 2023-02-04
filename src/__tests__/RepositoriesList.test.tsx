@@ -63,7 +63,7 @@ describe('RepositoriesList', () => {
 
     const searchBar = getByTestId('search-bar-view');
     fireEvent.changeText(searchBar, 'Search');
-    fireEvent(searchBar, 'submitEditing');
+    fireEvent(searchBar, 'submitEditing', { nativeEvent: { text: 'Search' } });
     expect(mockOnSearch).toHaveBeenCalledWith('Search');
   });
 
@@ -87,20 +87,20 @@ describe('RepositoriesList', () => {
   });
 
   it('should display a loading footer when there is something loading', () => {
-    const { getByTestId } = render(
+    const { getAllByTestId } = render(
       <RepositoriesList
         data={data}
         onSearch={mockOnSearch}
         onSelectRepository={mockOnSelectRepository}
         onLoadMore={mockOnLoadMore}
         totalElements={2}
-        searchedText=""
         loading
+        searchedText=""
         error=""
       />,
     );
 
-    const skeleton = getByTestId('skeleton-item');
-    expect(skeleton).toBeDefined();
+    const skeleton = getAllByTestId('skeleton-item');
+    expect(skeleton).toBeTruthy();
   });
 });

@@ -1,4 +1,4 @@
-import { OwnerInfo } from "./RepositoryResponse";
+import { OwnerInfo } from './RepositoryResponse';
 
 export interface Stargazer {
   starred_at: Date;

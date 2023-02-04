@@ -1,18 +1,23 @@
 import React from 'react';
+import { fireEvent } from '@testing-library/react-native';
 
-import { shallow } from 'enzyme';
 import { SearchBar } from '../components/SearchBar';
+import { render } from '../utils/testUtils';
 
 describe('SearchBar', () => {
   it('should render correctly', () => {
-    const wrapper = shallow(<SearchBar />);
+    const { getByTestId } = render(<SearchBar />);
 
-    expect(wrapper).toMatchSnapshot();
+    expect(getByTestId('searchbar')).toBeTruthy();
   });
 
-  it('should render an Input component', () => {
-    const wrapper = shallow(<SearchBar />);
+  it('should call onChangeText when the text changes', () => {
+    const onChangeText = jest.fn();
+    const { getByTestId } = render(<SearchBar onChangeText={onChangeText} />);
+    const input = getByTestId('searchbar');
 
-    expect(wrapper.find('Input').length).toEqual(1);
+    fireEvent.changeText(input, 'Test');
+
+    expect(onChangeText).toHaveBeenCalledWith('Test');
   });
 });
