@@ -99,6 +99,7 @@ export const StargazersList: React.FunctionComponent<StargazersListProps> = ({
 
   return (
     <FlatList
+      testID="stargazers-list"
       style={styles.container}
       contentContainerStyle={styles.contentContainer}
       data={data}

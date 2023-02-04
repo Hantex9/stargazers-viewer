@@ -14,7 +14,7 @@ interface ReturnedRepositoryHook {
  * Custom Hook used to retrieve the repositories, it manage the loading and
  * error doing all the business logic to append items to the list
  */
-function useStargazersApi(): ReturnedRepositoryHook {
+export function useStargazersApi(): ReturnedRepositoryHook {
   const [data, setData] = useState<Stargazer[]>();
   const [error, setError] = useState<string | null>('');
   const [loading, setLoading] = useState<boolean>(false);
@@ -77,5 +77,3 @@ function useStargazersApi(): ReturnedRepositoryHook {
     request,
   };
 }
-
-export default useStargazersApi;

@@ -3,7 +3,7 @@ import { StackNavigationOptions, StackScreenProps } from '@react-navigation/stac
 
 import { COMMON_NAV_OPTIONS } from '../../constants/commonStyle';
 import { AppNavigatorStackParams } from '../../navigation/AppNavigator';
-import useStargazersApi from '../../hooks/useStargazersApi';
+import { useStargazersApi } from '../../hooks/useStargazersApi';
 import { StargazersList } from './components/StargazersList';
 
 interface Props extends StackScreenProps<AppNavigatorStackParams, 'StargazersPage'> {}
