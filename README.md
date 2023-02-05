@@ -1,8 +1,8 @@
 <h1 align="center">
 <img
 		width="250"
-		alt="Tinder Clone - React Native"
-		src="https://github.com/stevenpersia/tinder-react-native/blob/master/preview/tinder-clone-logo.gif">
+		alt="Stargazers Viewer - React Native"
+		src="https://github.com/Hantex9/stargazers-viewer/blob/master/screenshots/app-preview.gif">
 </h1>
 
 <h3 align="center">Stargazers Viewer</h3>
@@ -10,7 +10,6 @@
 <div align="center">
 
 [![Status](https://img.shields.io/badge/status-active-success.svg)]()
-[![License](https://img.shields.io/badge/license-MIT-blue.svg)](/LICENSE)
 
 </div>
 
