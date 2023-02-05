@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "stargazers-viewer",
+    "name": "Stargazers Viewer",
     "slug": "stargazers-viewer",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -13,17 +13,17 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.hantex.stargazers-viewer"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
-      }
+      },
+      "package": "com.hantex.stargazersviewer"
     },
     "web": {
       "favicon": "./assets/favicon.png"

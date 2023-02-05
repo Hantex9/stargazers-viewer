@@ -11,10 +11,3 @@ export const COMMON_NAV_OPTIONS: StackNavigationOptions = {
     backgroundColor: colors.primary,
   },
 };
-
-export const COMMON_NAV_SEARCH_BAR_OPTIONS: SearchBarProps = {
-  barTintColor: '#ffffff',
-  autoCapitalize: 'none',
-  hideWhenScrolling: false,
-  hideNavigationBar: false,
-};
