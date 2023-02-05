@@ -16,7 +16,9 @@ export const StargazersPage = ({ route }: Props) => {
   const stargazers = useStargazersApi();
 
   useEffect(() => {
-    fetchStargazers();
+    if (repository.stargazers_count > 0) {
+      fetchStargazers();
+    }
   }, []);
 
   const fetchStargazers = async (page: number = 1) => {
