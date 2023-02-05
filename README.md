@@ -58,7 +58,7 @@ These instructions will get you a copy of the project up and running on your loc
 
 ### Prerequisites
 
-To run this application, you will need [NodeJS](https://nodejs.org/en/) and [Expo CLI](https://expo.dev/tools) installed on your computer
+To run this application locally, you will need [NodeJS](https://nodejs.org/en/) and [Expo CLI](https://expo.dev/tools) installed on your computer
 
 ### Installing
 
