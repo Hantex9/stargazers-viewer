@@ -185,6 +185,7 @@ A component for displaying an empty state with a customizable Lottie animation a
 | text | string | No | The text to display below the Lottie animation |
 | source | any | No | The source of the Lottie animation. If not provided, a default Lottie animation is used |
 | height | number | No | The height of the Lottie animation. Default value is 220 |
+
 Note: The component also accepts all props from [NativeBase Stack component](https://docs.nativebase.io/stack)
 
 ### `WelcomeContent`
