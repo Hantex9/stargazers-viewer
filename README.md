@@ -39,7 +39,7 @@ The use of TypeScript was chosen to make the project more maintainable and compr
 ### Libraries
 
 - [NativeBase](https://nativebase.io/): A UI library for React & React Native used for the entire app using their in-box components;
-- [React Navigation 6](https://reactnavigation.org/): Used for the routing and navigation for the app, for this app is used only a Stack Navigator;
+- [React Navigation 6](https://reactnavigation.org/): Used for the routing and navigation for the app, for this app is used only a `StackNavigator`;
 - [React Native Reanimated 2](https://github.com/software-mansion/react-native-reanimated): An Animation API, in the project is used to show animations to improve the UX;
 - [Lottie React Native](https://github.com/lottie-react-native/lottie-react-native): A library used to render animations natively, in the project it is used to show animations such as the Not Found in a list after a search and in the on boarding page at the startup of the project;
 - [Axios](https://github.com/axios/axios): A promise-based HTTP Client, used to make HTTP requests (in this case to the GitHub APIs);
