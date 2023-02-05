@@ -69,7 +69,7 @@ npm run android
 ## 📱 App builds <a name = "app_builds"></a>
 If you don't want install the local environment, I provided in this project also a build for *android* and *ios*, so you can try the app on your simulator or device just installing the apk/ios-build on it.
 
-You can find the final builds in the directory "NOME_DIRECTORY"
+You can find the final builds in the [BUILDS](https://github.com/Hantex9/stargazers-viewer/tree/master/builds) directory
 
 ## 🔧 Running the tests <a name = "tests"></a>
 To run tests there are available two main npm command that you can type in order to check tests.
