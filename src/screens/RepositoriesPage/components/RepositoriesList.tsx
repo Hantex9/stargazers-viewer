@@ -78,14 +78,14 @@ export const RepositoriesList: React.FunctionComponent<RespositoriesListProps> =
           onSubmitEditing={evt => onSearch(evt.nativeEvent.text)}
           placeholder="Search repositories..."
         />
-        {totalElements && (
+        {totalElements ? (
           <TotalCounterView
             testID="total-counter-view"
             key="total-counter"
             pt={3}
             total={totalElements}
           />
-        )}
+        ) : null}
       </>
     ),
     [totalElements],
