@@ -21,6 +21,7 @@
 ## 📝 Table of Contents
 - [Overview](#overview)
 - [Getting Started](#getting_started)
+- [App Builds](#app_builds)
 - [Running the Tests](#tests)
 
 ## 🧐 Overview <a name = "overview"></a>
@@ -59,23 +60,27 @@ npm install
 To run the app locally based on the target OS run one of the following commands
 ```
 // iOS
-expo run:ios
+npm run ios
 
 // Android
-expo run:android
-```
-### Building
-To run the app locally based on the target OS run one of the following commands
-```
-// iOS
-expo run:ios
-
-// Android
-expo run:android
+npm run android
 ```
 
-End with an example of getting some data out of the system or using it for a little demo.
+## 📱 App builds <a name = "app_builds"></a>
+If you don't want install the local environment, I provided in this project also a build for *android* and *ios*, so you can try the app on your simulator or device just installing the apk/ios-build on it.
+
+You can find the final builds in the directory "NOME_DIRECTORY"
 
 ## 🔧 Running the tests <a name = "tests"></a>
-TODO
+To run tests there are available two main npm command that you can type in order to check tests.
+
+Use this following command in order to start tests and check if they pass or not
+```
+npm run test
+```
+
+But if you want check also the Unit Test coverage, is available the following command:
+```
+npm run test-coverage
+```
 
