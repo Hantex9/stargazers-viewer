@@ -74,10 +74,10 @@ To run the app locally based on the target OS run one of the following commands
 
 ```
 // iOS
-npm run ios
+expo run:ios
 
 // Android
-npm run android
+expo run:android
 ```
 
 ## 📱 App builds <a name = "app_builds"></a>
