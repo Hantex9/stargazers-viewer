@@ -25,6 +25,7 @@
 - [Getting Started](#getting_started)
 - [App Builds](#app_builds)
 - [Running the Tests](#tests)
+- [Components Documentation](#components)
 
 ## 🧐 Overview <a name = "overview"></a>
 
@@ -100,3 +101,112 @@ But if you want check also the Unit Test coverage, is available the following co
 ```
 npm run test-coverage
 ```
+
+## 📃 Components Documentation <a name = "components"></a>
+In this section i will provide you a detailed documentation of the most used and important components of the project
+### `RepositoriesList`
+A component that shows a list of repositories. It is paginated and can have also a search bar to filter results.
+
+| Prop | Type | Required | Explanation |
+|------|------|----------|-------------|
+| `onSearch` | function | Yes | Function called when the user submits a search in the search bar. The searched text is passed as argument. |
+| `totalElements` | number | No | Total number of elements in the repository. If not passed, the total counter is not displayed. |
+| `data` | RepositoryInfo[] | No | Array of repository information to be displayed in the list. |
+| `loading` | boolean | No | Boolean indicating whether data is being loaded. If true, a loading state is displayed. |
+| `error` | string | No | Error string to be displayed in case of a failed API request. |
+| `searchedText` | string | No | Text that was searched in the search bar |
+| `testID` | string | No | ID for testing purposes |
+| `onSelectRepository` | function | No | Function called when a repository item is selected. The selected repository information is passed as argument. |
+| `onLoadMore` | function | No | Function called when the user reaches the end of the list. This can be used to load more data in a pagination scenario. |
+
+### `RepositoryItem`
+A component that displays information about a repository. This component accepts the following props:
+
+| Prop | Type | Required | Explanation |
+|------|------|----------|-------------|
+| repository | `RepositoryInfo` | No | The repository information to be shown. |
+| skeleton | `boolean` | No | If the component should show a skeleton. Default is false. |
+| onPress | `() => void` | No | The function that will be executed when the user press the component. |
+
+#### RepositoryInfo
+An interface that describes the repository information to be displayed.
+
+| Prop | Type | Description |
+|------|------|-------------|
+| full_name | `string` | The full name of the repository. |
+| description | `string` | The description of the repository. |
+| stargazers_count | `number` | The number of stargazers for the repository. |
+| updated_at | `string` | The last updated time of the repository. |
+---
+
+### `StargazersList`
+The `StargazersList` component is a flat list that displays a list of stargazers for a specific repository.
+
+| Prop | Type | Required | Explanation |
+| ---- | ---- | -------- | ----------- |
+| `loading` | `boolean` | No | If `true`, displays a loading state instead of the list of stargazers. |
+| `data` | `Stargazer[]` | No | An array of `Stargazer` objects representing the stargazers of the repository. |
+| `repository` | `RepositoryInfo` | No | An object representing the information of the repository. |
+| `error` | `string` | No | An error message displayed when there is an error fetching the data. |
+| `onLoadMore` | `() => void` | No | A callback function that is called when the user reaches the end of the list to load more data. |
+
+### `StargazerItem`
+A component to display a Stargazer item with details such as username and date of starring.
+
+| Prop       | Type         | Required | Explanation |
+| ---------- | ------------ | -------- | ----------- |
+| stargazer  | `Stargazer`  | No       | The Stargazer data object to display. |
+| skeleton   | `boolean`    | No       | A flag to show skeleton layout when it is `true` |
+
+#### Stargazer
+This interface represents the Stargazer of a GitHub repository.
+
+| Prop     | Type      | Required | Explanation                                                                           |
+|----------|-----------|----------|---------------------------------------------------------------------------------------|
+| starred_at | `Date`   | Yes      | The date that the user starred the repository.                                        |
+| user      | `OwnerInfo` | Yes    | An object that holds information about the owner of the repository.                   |
+
+#### OwnerInfo
+This interface represents the owner of a GitHub repository.
+
+| Prop      | Type     | Required | Explanation                                                 |
+|-----------|----------|----------|-------------------------------------------------------------|
+| login     | `string` | Yes      | The username of the owner of the repository.                |
+| avatar_url | `string` | No       | The URL of the owner's profile picture on GitHub (optional). |
+---
+## Common Components
+In the following there is a documentation of the common components of the project
+
+### `EmptyContent`
+A component for displaying an empty state with a customizable Lottie animation and text.
+
+| Prop | Type | Required | Explanation |
+| --- | --- | --- | --- |
+| text | string | No | The text to display below the Lottie animation |
+| source | any | No | The source of the Lottie animation. If not provided, a default Lottie animation is used |
+| height | number | No | The height of the Lottie animation. Default value is 220 |
+Note: The component also accepts all props from [NativeBase Stack component](https://docs.nativebase.io/stack)
+
+### `WelcomeContent`
+A component that provides a common welcome page with animated components.
+
+| Prop        | Type           | Required  | Explanation  |
+| ------------- |:-------------:| -----:| -----------:|
+| text      | string | Yes | The text to be displayed in the component |
+| height      | number      |   No | The height of the animation component |
+| title | string      |    No | The title of the component |
+
+### `TotalCounterView`
+A component that displays the total number of results for a search.
+
+| Prop            | Type      | Required | Explanation                                                                                                        |
+|----------------|-----------|----------|--------------------------------------------------------------------------------------------------------------------|
+| total          | number    | No       | The total number of results. If not provided, will display "-" as the value.                                      |
+| rest           | object    | No       | Other props to be passed to the `HStack` props from [NativeBase HStack component](https://docs.nativebase.io/hstack).                              |
+
+### `SearchBar`
+A component which is used as SearchBar in the app with a predefinited style. It inherits all the props from [NativeBase Input component](https://docs.nativebase.io/input)
+
+### `TouchableContent`
+Common component used to indicate if the content (children) is touchable with a feedback based on the OS.
+This component supports all the props available for the [TouchableNativeFeedback](https://reactnative.dev/docs/touchablenativefeedback) component in Android, and [TouchableOpacity](https://reactnative.dev/docs/touchableopacity) component in iOS.
