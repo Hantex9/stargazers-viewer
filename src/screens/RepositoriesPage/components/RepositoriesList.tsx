@@ -128,15 +128,16 @@ export const RepositoriesList: React.FunctionComponent<RespositoriesListProps> =
   const ListFooterComponent = useMemo(
     () => (
       <>
-        {generatePlaceholderArray(3).map((el, index) => (
-          <React.Fragment key={`skeleton-container-${index}`}>
-            <RepositoryItem testID="skeleton-item" key={`skeleton-repo-${index}`} skeleton />
-            <Divider key={`divider-repo-${index}`} />
-          </React.Fragment>
-        ))}
+        {loading &&
+          generatePlaceholderArray(3).map((el, index) => (
+            <React.Fragment key={`skeleton-container-${index}`}>
+              <RepositoryItem testID="skeleton-item" key={`skeleton-repo-${index}`} skeleton />
+              <Divider key={`divider-repo-${index}`} />
+            </React.Fragment>
+          ))}
       </>
     ),
-    [],
+    [loading],
   );
 
   const renderItem: ListRenderItem<RepositoryInfo> = useCallback(
@@ -166,8 +167,8 @@ export const RepositoriesList: React.FunctionComponent<RespositoriesListProps> =
       ListHeaderComponentStyle={styles.headerList}
       maxToRenderPerBatch={config.defaultTotalItemsPerPage}
       initialNumToRender={config.defaultTotalItemsPerPage}
-      windowSize={5}
-      ListFooterComponent={loading ? ListFooterComponent : null}
+      windowSize={10}
+      ListFooterComponent={ListFooterComponent}
       ItemSeparatorComponent={Divider}
       ListEmptyComponent={EmptyListComponent}
       onMomentumScrollBegin={handleOnMomentumScrollBegin}

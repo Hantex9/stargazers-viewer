@@ -10,9 +10,9 @@ axios.defaults.timeout = config.defaultTimeoutRequests;
 // Headers
 axios.defaults.headers.common['Content-Type'] = 'application/json';
 axios.defaults.headers.common.Accept = 'application/json';
-// if (config.githubApiToken) {
-//   axios.defaults.headers.common.Authorization = `Bearer ${config.githubApiToken}`;
-// }
+if (config.githubApiToken) {
+  axios.defaults.headers.common.Authorization = `Bearer ${config.githubApiToken}`;
+}
 
 /**
  * Response Interceptor

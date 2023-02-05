@@ -81,12 +81,13 @@ export const StargazersList: React.FunctionComponent<StargazersListProps> = ({
   const ListFooterComponent = useMemo(
     () => (
       <>
-        {generatePlaceholderArray(5).map((el, index) => (
-          <React.Fragment key={`footer-skeleton-${index}`}>
-            <StargazerItem testID="skeleton-item" key={`skeleton-${index}`} skeleton />
-            <Divider key={`divider-${index}`} />
-          </React.Fragment>
-        ))}
+        {loading &&
+          generatePlaceholderArray(5).map((el, index) => (
+            <React.Fragment key={`footer-skeleton-${index}`}>
+              <StargazerItem testID="skeleton-item" key={`skeleton-${index}`} skeleton />
+              <Divider key={`divider-${index}`} />
+            </React.Fragment>
+          ))}
       </>
     ),
     [loading],
@@ -107,6 +108,7 @@ export const StargazersList: React.FunctionComponent<StargazersListProps> = ({
       ListHeaderComponent={
         data && data.length > 0 && repository ? (
           <StargazersListHeader
+            pr={1}
             name={repository?.full_name}
             counter={repository?.stargazers_count}
           />
@@ -116,7 +118,7 @@ export const StargazersList: React.FunctionComponent<StargazersListProps> = ({
       maxToRenderPerBatch={config.defaultTotalItemsPerPage}
       initialNumToRender={config.defaultTotalItemsPerPage}
       renderItem={renderItem}
-      ListFooterComponent={loading ? ListFooterComponent : null}
+      ListFooterComponent={ListFooterComponent}
       ItemSeparatorComponent={Divider}
       ListEmptyComponent={EmptyListComponent}
       onMomentumScrollBegin={() => {
@@ -124,7 +126,7 @@ export const StargazersList: React.FunctionComponent<StargazersListProps> = ({
         listEndReached.current = false;
       }}
       onEndReached={loadMoreData}
-      windowSize={5}
+      windowSize={10}
       onEndReachedThreshold={0.01}
     />
   );

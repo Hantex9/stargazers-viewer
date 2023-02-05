@@ -41,7 +41,7 @@ const RepositoryItem: React.FunctionComponent<
                 {repository.full_name}
               </Text>
               {repository.description && (
-                <Text testID="repository-description" fontSize={14}>
+                <Text testID="repository-description" numberOfLines={4} fontSize={14}>
                   {repository.description}
                 </Text>
               )}
