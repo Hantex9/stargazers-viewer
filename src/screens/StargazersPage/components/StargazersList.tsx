@@ -75,7 +75,7 @@ export const StargazersList: React.FunctionComponent<StargazersListProps> = ({
         )}
       </>
     ),
-    [loading],
+    [loading, error, data],
   );
 
   const ListFooterComponent = useMemo(
