@@ -59,7 +59,6 @@ export function useStargazersApi(): ReturnedRepositoryHook {
         if (mounted.current) {
           setError((err as any)?.message || 'Unexpected Error!');
         }
-        console.log(err);
         throw err;
       } finally {
         if (mounted.current) {

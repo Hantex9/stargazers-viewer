@@ -65,7 +65,6 @@ export function useRepositoryApi(): ReturnedRepositoryHook {
         if (mounted.current && err) {
           setError((err as any).message || 'Unexpected Error!');
         }
-        console.log(err);
         throw err;
       } finally {
         if (mounted.current) {
